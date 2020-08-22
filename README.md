@@ -1,6 +1,6 @@
 ### xHaust
 
-#### Amazingly fast HTTP brute forcer
+#### Amazingly fast HTTP brute forcer, xhausting your logins... for science
 
 ## Setup
 
