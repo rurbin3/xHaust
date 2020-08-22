@@ -1,0 +1,34 @@
+{
+  "name": "xhaust",
+  "version": "0.0.1",
+  "description": "xhausts your logins... for science",
+  "main": "xhaust.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "GiveMeAllYourCats <specamps@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^3.2.0",
+    "blessed": "^0.1.81",
+    "blessed-contrib": "^4.8.20",
+    "bookshelf": "^1.2.0",
+    "chalk": "^4.1.0",
+    "cli-progress": "^3.8.2",
+    "commander": "^6.0.0",
+    "debug": "^4.1.1",
+    "dotenv": "^8.2.0",
+    "dotfile": "0.0.2",
+    "figlet": "^1.5.0",
+    "glob": "^7.1.6",
+    "jsdom": "^16.4.0",
+    "json-colorizer": "^2.2.2",
+    "knex": "^0.21.5",
+    "ora": "^5.0.0",
+    "pg": "^8.3.2",
+    "pretty-error": "^2.1.1",
+    "prettycli": "^1.4.3",
+    "prettyprint": "^1.1.2",
+    "tasktimer": "^3.0.0"
+  }
+}

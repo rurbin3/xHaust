@@ -1,3 +1,7 @@
+# xHaust
+datastorage/
+*.bak
+
 # Logs
 logs
 *.log
