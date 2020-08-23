@@ -1,4 +1,4 @@
-![xhaust logo](https://i.imgur.com/WRBYnu4.png)
+![xhaust logo](https://i.imgur.com/y2MV8Hk.png)
 
 <p align="center">
 💪⚡ Blazingly fast brute forcer made in Node.js, xHausting your logins... For science.
