@@ -3,21 +3,15 @@ const packagejson = require('../package.json')
 const url = require('url')
 const colorize = require('json-colorizer')
 const chalk = require('chalk')
+const banner = require('../modules/banner')
 
 module.exports = class Commander extends require('../classes/package') {
 	constructor() {
 		super()
 	}
 
-	printFooter() {
-		console.log(`
-  xHaust is a tool to guess/crack valid login/password pairs.
-  Licensed under Massachusetts Institute of Technology (MIT) License. 
-  The newest version is always available at: https://github.com/givemeallyourcats/xhaust
-  Please don't use in military or secret service organizations, or for illegal purposes. 😆`)
-	}
-
 	async inquiry() {
+		program.name('xhaust').usage('[options]')
 		program.version(packagejson.version)
 		program.exitOverride()
 		const example =
@@ -27,16 +21,18 @@ module.exports = class Commander extends require('../classes/package') {
 			console.log('')
 			console.log('Example call:')
 			console.log(chalk.bold.white(`  $ xhaust ${example}`))
+			process.exit()
 		})
 
-		program.option('-a, --attackUri <attackUri>', 'Protocol URI to attack')
-		program.option('-u, --user <user>', 'Username to use in attack payload')
-		program.option('-U, --userfile <userfile>', 'File full of usernames to use in attack payload')
-		program.option('-p, --pass <pass>', 'Password to use in attack payload')
-		program.option('-P, --passfile <passfile>', 'File full of passwords to use in attack payload')
-		program.option('-l, --limitParallel <limitParallel>', 'Max parallel requests at a time')
-		program.option('-b, --batchSize <batchSize>', 'The get and post requests batch size')
-		program.option('-T, --test', 'Run attack on in built local http server for testing')
+		program.option('-a, --attackUri <attackUri>', 'protocol URI to attack')
+		program.option('-u, --user <user>', 'username to use in attack payload')
+		program.option('-U, --userfile <userfile>', 'file full of usernames to use in attack payload')
+		program.option('-p, --pass <pass>', 'password to use in attack payload')
+		program.option('-P, --passfile <passfile>', 'file full of passwords to use in attack payload')
+		program.option('-l, --limitParallel <limitParallel>', 'max parallel requests at a time')
+		program.option('-b, --batchSize <batchSize>', 'the get and post requests batch size')
+		program.option('-d, --dry-run <dryRun>', 'executes the attack in dry run mode')
+		program.option('-T, --test', 'run attack on in built local http server for testing')
 		program.option(
 			'-t, --tags <tags>',
 			'tags to use for this attack seperated by hypens (Ex. http-post-urlencoded)'
@@ -58,7 +54,7 @@ module.exports = class Commander extends require('../classes/package') {
 				console.log('\n')
 				this.xHaust.Debug.error(err.toString().replace('CommanderError: error: ', ''))
 				program.outputHelp()
-				this.printFooter()
+				banner.footer()
 				process.exit()
 			}
 		}
@@ -66,7 +62,7 @@ module.exports = class Commander extends require('../classes/package') {
 		if (process.argv.length <= 2) {
 			this.xHaust.Debug.error('Need command parameters to execute xHaust...')
 			program.outputHelp()
-			this.printFooter()
+			banner.footer()
 			process.exit()
 		}
 
