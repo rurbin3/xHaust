@@ -113,6 +113,9 @@ module.exports = class Debug extends require('../classes/package') {
 		const consoleLogger = require('ololog')
 			.configure({
 				locate,
+				stringify: {
+					maxDepth: 2
+				},
 				time: timeObject
 			})
 			.before('render')

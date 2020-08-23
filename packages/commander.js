@@ -81,13 +81,18 @@ module.exports = class Commander extends require('../classes/package') {
 		if (program.input) output.input = program.input
 		if (program.output) output.output = program.output
 
-		if (output.attackUri && !output.tags) {
-			this.xHaust.Debug.error(`--tags are needed for all attack types, except --test runs`)
+		if (!output.attackUri && !output.test) {
+			this.xHaust.Debug.error(`either --attackUri or --test needs to be set`)
 			process.exit()
 		}
 
-		if (!output.attackUri && !output.test) {
-			this.xHaust.Debug.error(`either --attackUri or --test needs to be set`)
+		if (output.attackUri && output.test) {
+			this.xHaust.Debug.error(`--attackUri and --test cannot be set both`)
+			process.exit()
+		}
+
+		if (output.attackUri && !output.tags) {
+			this.xHaust.Debug.error(`--tags are needed for all attack types, except --test runs`)
 			process.exit()
 		}
 
