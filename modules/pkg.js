@@ -1,5 +1,6 @@
 const glob = require('glob')
 const path = require('path')
+const appRoot = require('app-root-path').path
 
 const pkg = {}
 
@@ -12,7 +13,7 @@ pkg.load = async bindTo => {
 		xhaust = []
 
 		// Require packages and create instances
-		for (let file of glob.sync('packages/*.js')) {
+		for (let file of glob.sync(path.join(appRoot, 'packages', '*.js'))) {
 			let fileName = path.basename(file, '.js')
 			fileName = fileName.charAt(0).toUpperCase() + fileName.slice(1)
 			bindTo[fileName] = new (require(path.resolve(file)))()

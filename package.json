@@ -9,6 +9,7 @@
   "author": "GiveMeAllYourCats <specamps@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "app-root-path": "^3.0.0",
     "async": "^3.2.0",
     "blessed": "^0.1.81",
     "blessed-contrib": "^4.8.20",

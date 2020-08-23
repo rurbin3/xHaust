@@ -1,8 +1,9 @@
 ### xHaust
 
-#### 💪⚡ Blazingly fast HTTP brute forcer made in Node.js, xHausting your logins... For science.
-
-![alt text](logo.png 'xHaust')
+<p align="center">
+  <img width="460" height="300" src="https://i.imgur.com/X79ag81.png">
+  💪⚡ Blazingly fast HTTP brute forcer made in Node.js, xHausting your logins... For science.
+</p>
 
 #### Installation
 
@@ -36,7 +37,7 @@ Example call:
   $ xhaust -a https://website.com -t -a http://somewebsite.com http-post-urlencoded -u admin -P passwords.txt -s 1000 -l 130 -i "csrf=token" -o "username=:username:&password=:password:&csrftoken=:csrf:"
 ```
 
-![alt text](https://i.imgur.com/XIazZdn.png)
+![xhaust help command preview](https://i.imgur.com/XIazZdn.png)
 
 #### Project Layout
 

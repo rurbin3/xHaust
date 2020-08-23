@@ -31,7 +31,7 @@ module.exports = class xHaust {
 		// Default settings
 		this.settings = this.DEFAULT_SETTINGS
 		this.launchOptions = launchOptions
-		this.rootDir = path.resolve(__dirname)
+		this.rootDir = require('app-root-path').path
 
 		// Debug filters
 		this.Debug.filter = ['debug', 'log']
