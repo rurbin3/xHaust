@@ -1,5 +1,3 @@
-<p align="center">
-
             .,::      .:  ::   .:    :::.      ...    ::: .::::::. ::::::::::::
             `;;;,  .,;;  ,;;   ;;,   ;;`;;     ;;     ;;;;;;`    ` ;;;;;;;;''''
               '[[,,[['  ,[[[,,,[[[  ,[[ '[[,  [['     [[['[==/[[[[,     [[
@@ -7,8 +5,8 @@
              oP"``"Yo,   888   "88o 888   888,88    .d888 88b    dP     88,
           ,m"       "Mm, MMM    YMM YMM   ""`  "YmmMMMM""  "YMmMY"      MMM
 
+<p align="center">
 💪⚡ Blazingly fast brute forcer made in Node.js, xHausting your logins... For science.
-
 </p>
 
 ### xHaust
