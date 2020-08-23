@@ -16,7 +16,7 @@ npm install -g xhaust
 
 #### Usage
 
-```bash
+```
 Usage: xhaust [options]
 
 Options:
