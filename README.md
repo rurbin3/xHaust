@@ -40,8 +40,6 @@ Example call:
   $ xhaust -a https://website.com -t -a http://somewebsite.com http-post-urlencoded -u admin -P passwords.txt -s 1000 -l 130 -i "csrf=token" -o "username=:username:&password=:password:&csrftoken=:csrf:"
 ```
 
-![xhaust help command preview](https://i.imgur.com/XIazZdn.png)
-
 #### Project Layout
 
     .
