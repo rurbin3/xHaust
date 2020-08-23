@@ -8,6 +8,8 @@ A fast brute forcer made in Node.js, mostly capable of HTTP attacks. The main ma
 
 **xHaust** achieves it's top speed by using the [async](https://caolan.github.io/async/v3/) module, it can execute password tries in parallel with a set limit. Note that Node.js is still single threaded and so is this library. Due to performance reasons the choice to not create multiple threads for this module has been respected, this is because most password tries are finished by the CPU before any other task completes and the CPU can easily exhaust (heh) request speeds before the requests can exhaust the CPU, making threads costly for this kind of goal.
 
+# THIS PROJECT IS NOT YET FINISHED, PLEASE COME BACK LATER
+
 #### Installation
 
 ```bash
