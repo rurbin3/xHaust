@@ -1,6 +1,5 @@
 <p align="center">
-<img src="https://i.imgur.com/y2MV8Hk.png"><br>
-💪⚡ Blazingly fast brute forcer made in Node.js, xHausting your logins... For science.
+  <img src="https://i.imgur.com/uqc6dnX.png">
 </p>
 
 ### xHaust
