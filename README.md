@@ -1,5 +1,5 @@
 <p align="center">
-  ![xhaust logo](https://i.imgur.com/y2MV8Hk.png)
+  <img src="https://i.imgur.com/y2MV8Hk.png">
 💪⚡ Blazingly fast brute forcer made in Node.js, xHausting your logins... For science.
 </p>
 
