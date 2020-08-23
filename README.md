@@ -1,7 +1,7 @@
 ### xHaust
 
 <p align="center">
-  <img width="460" height="300" src="https://i.imgur.com/X79ag81.png">
+  <img width="193" height="196" src="https://i.imgur.com/X79ag81.png"><br>
   💪⚡ Blazingly fast HTTP brute forcer made in Node.js, xHausting your logins... For science.
 </p>
 
