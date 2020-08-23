@@ -35,9 +35,12 @@ Options:
   -o, --output <output>                output string to use as payload for attack, will replace :username: :password: and :csrf: with respectable values
   -g, --useGui                         enable gui
   -h, --help                           display help for command
+```
 
-Example call:
-  $ xhaust -a https://website.com -t -a http://somewebsite.com http-post-urlencoded -u admin -P passwords.txt -s 1000 -l 130 -i "csrf=token" -o "username=:username:&password=:password:&csrftoken=:csrf:"
+##### Example call:
+
+```bash
+  $ xhaust -a https://website.com -t -a http://somewebsite.com http-post-urlencoded -u admin -P passwords.txt -s 1000 -l 130 -i "csrf=token" -o "username=:username:&password=:password:&csrftoken=:csrf:"`
 ```
 
 #### Project Layout
