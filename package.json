@@ -1,7 +1,7 @@
 {
   "name": "xhaust",
-  "version": "0.0.3",
-  "description": "xhausts your logins... for science",
+  "version": "0.0.4",
+  "description": "Blazingly fast brute forcer made in Node.js, exhausting your logins... For science.",
   "main": "xhaust.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

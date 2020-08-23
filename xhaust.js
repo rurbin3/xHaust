@@ -53,7 +53,6 @@ module.exports = class xHaust {
 	// Will run commander to inquirer options from user
 	async runCommander() {
 		await banner.show()
-		this.Debug.debug('Commander inquiry starting')
 		const commanderSettings = await this.Commander.inquiry()
 		this.Debug.debug('Commander settings', commanderSettings)
 		this.settings = Object.assign({}, this.settings, commanderSettings)

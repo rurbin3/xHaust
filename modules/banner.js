@@ -27,7 +27,7 @@ banner.show = async () => {
 				}
 				console.log(`\n\n             ${chalk.keyword('grey')(data.split('\n').join('\n             '))}\n\n`)
 				console.log(
-					`   💪⚡Blazingly fast HTTP brute forcer made in Node.js, xHausting your logins... For science.\n\n`
+					`   💪⚡Blazingly fast brute forcer made in Node.js, exhausting your logins... For science.\n\n`
 				)
 				return resolve()
 			}
