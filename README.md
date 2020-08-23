@@ -1,13 +1,4 @@
-```bash
-
-            .,::      .:  ::   .:    :::.      ...    ::: .::::::. ::::::::::::
-            `;;;,  .,;;  ,;;   ;;,   ;;`;;     ;;     ;;;;;;`    ` ;;;;;;;;''''
-              '[[,,[['  ,[[[,,,[[[  ,[[ '[[,  [['     [[['[==/[[[[,     [[
-               Y$$$P    "$$$"""$$$ c$$$cc$$$c $$      $$$  '''    $     $$
-             oP"``"Yo,   888   "88o 888   888,88    .d888 88b    dP     88,
-          ,m"       "Mm, MMM    YMM YMM   ""`  "YmmMMMM""  "YMmMY"      MMM
-
-```
+![xhaust logo](https://i.imgur.com/WRBYnu4.png)
 
 <p align="center">
 💪⚡ Blazingly fast brute forcer made in Node.js, xHausting your logins... For science.
