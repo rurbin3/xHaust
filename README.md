@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://i.imgur.com/uqc6dnX.png">
+  <img src="https://i.imgur.com/ycMP8RV.png">
 </p>
 
 ### xHaust

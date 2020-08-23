@@ -25,7 +25,7 @@ banner.show = async () => {
 					console.log('Error displaying banner: ', err.toString())
 					return resolve()
 				}
-				console.log(`\n\n          ${chalk.keyword('grey')(data.split('\n').join('\n          '))}\n\n`)
+				console.log(`\n\n             ${chalk.keyword('grey')(data.split('\n').join('\n             '))}\n\n`)
 				console.log(
 					`   💪⚡Blazingly fast HTTP brute forcer made in Node.js, xHausting your logins... For science.\n\n`
 				)
