@@ -21,6 +21,7 @@ module.exports = class xHaust {
 
 	constructor() {
 		return new Promise(async (resolve, reject) => {
+			this.root = require('app-root-path').path
 			await pkg.load(this)
 			return resolve(this)
 		})
@@ -31,7 +32,6 @@ module.exports = class xHaust {
 		// Default settings
 		this.settings = this.DEFAULT_SETTINGS
 		this.launchOptions = launchOptions
-		this.rootDir = require('app-root-path').path
 
 		// Debug filters
 		this.Debug.filter = ['debug', 'log']
@@ -40,12 +40,12 @@ module.exports = class xHaust {
 			this.Debug.filter = ['nothing']
 		}
 
-		this.Debug.debug(`Started ${packagejson.name} v${packagejson.version}`)
-		this.Debug.debug({ launchOptions, rootDir: this.rootDir })
-
 		if (launchOptions.commander) {
 			await this.runCommander()
 		}
+
+		this.Debug.debug(`Started ${packagejson.name} v${packagejson.version}`)
+		this.Debug.debug(this)
 
 		await this.prepareAttack()
 	}

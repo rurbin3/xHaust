@@ -1,7 +1,6 @@
 module.exports = new (class Exec {
 	constructor() {
 		this.terminal = require('child_process').spawn('bash')
-		console.log('spawned')
 	}
 
 	async run(cmd) {

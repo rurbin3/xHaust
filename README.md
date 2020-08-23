@@ -1,9 +1,13 @@
-### xHaust
-
 <p align="center">
   <img width="193" height="196" src="https://i.imgur.com/X79ag81.png"><br>
-  💪⚡ Blazingly fast HTTP brute forcer made in Node.js, xHausting your logins... For science.
+  💪⚡ Blazingly fast brute forcer made in Node.js, xHausting your logins... For science.
 </p>
+
+### xHaust
+
+A fast brute forcer made in Node.js, mostly capable of HTTP attacks. The main mantra of xHaust is **fast and reliability**
+
+**xHaust** achieves it's top speed by using the [async](https://caolan.github.io/async/v3/) module, it can execute password tries in parallel with a set limit. Note that Node.js is still single threaded and so is this library. Due to performance reasons the choice to not create multiple threads for this module has been respected, this is because most password tries are finished by the CPU before any other task completes, making threads more costly then not using them.
 
 #### Installation
 

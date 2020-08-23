@@ -15,7 +15,6 @@ module.exports = class Debug extends require('../classes/package') {
 		this.logToConsole = true
 		this.firstStart = true
 		this.filters = ['']
-		this.createDebugger()
 
 		process.on('uncaughtException', async e => {
 			this.throw(e)
@@ -49,12 +48,19 @@ module.exports = class Debug extends require('../classes/package') {
 		}
 	}
 
+	async boot() {
+		await this.createDebugger()
+	}
+
 	async throw(e) {
 		const stacktrace = (await new StackTracey(e).cleanAsync()).asTable()
 		this.logToFile = false
 		this.fatal(e)
 		console.log(e.toString())
 		console.log(stacktrace)
+
+		process.exit()
+
 		fs.appendFileSync(this.fatalFile, e.toString() + '\n')
 		fs.appendFileSync(this.fatalFile, stacktrace + '\n')
 		fs.appendFileSync(this.allFile, e.toString() + '\n')
@@ -122,12 +128,13 @@ module.exports = class Debug extends require('../classes/package') {
 
 		const fileLogger = require('ololog')
 			.configure({
+				locate: false,
 				stringify: {
-					maxDepth: 1,
+					maxDepth: 2,
 					maxLength: 999999,
-					maxArrayLength: 1,
-					maxObjectLength: 1,
-					maxStringLength: 1
+					maxArrayLength: 2,
+					maxObjectLength: 2,
+					maxStringLength: 2
 				},
 				time: timeObject
 			})
@@ -150,7 +157,7 @@ module.exports = class Debug extends require('../classes/package') {
 	async createDebugger() {
 		this.trace = require('ololog').before('render')
 		const opts = { flags: 'a' }
-		mkdirp.sync('./logs')
+		mkdirp.sync(path.join(this.xHaust.root, 'logs'))
 		this.stream = {}
 		for (let type of ['log', 'debug', 'info', 'warn', 'error']) {
 			const file = path.join(
@@ -162,10 +169,11 @@ module.exports = class Debug extends require('../classes/package') {
 			this.stream[type] = fs.createWriteStream(file, opts)
 		}
 
-		this.allFile = path.join(__dirname, '..', 'logs', `${moment().format('YYYY-MM-DD')}.ALL.txt`)
+		this.allFile = path.join(this.xHaust.root, 'logs', `${moment().format('YYYY-MM-DD')}.ALL.txt`)
 		this.stream.all = fs.createWriteStream(this.allFile, opts)
 
-		this.fatalFile = path.join(__dirname, '..', 'logs', `${moment().format('YYYY-MM-DD')}.FATAL.txt`)
+		this.fatalFile = path.join(this.xHaust.root, 'logs', `${moment().format('YYYY-MM-DD')}.FATAL.txt`)
+
 		if (!fs.existsSync(this.fatalFile)) {
 			const stream = fs.createWriteStream(this.fatalFile, opts)
 			stream.close()
