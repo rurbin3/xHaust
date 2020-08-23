@@ -20,15 +20,26 @@
     "dotenv": "^8.2.0",
     "dotfile": "0.0.2",
     "figlet": "^1.5.0",
+    "get-folder-size": "^2.0.1",
     "glob": "^7.1.6",
     "jsdom": "^16.4.0",
     "json-colorizer": "^2.2.2",
     "knex": "^0.21.5",
+    "lodash": "^4.17.20",
+    "moment": "^2.27.0",
+    "object-inspect": "^1.8.0",
+    "ololog": "^1.1.161",
     "ora": "^5.0.0",
     "pg": "^8.3.2",
     "pretty-error": "^2.1.1",
     "prettycli": "^1.4.3",
     "prettyprint": "^1.1.2",
+    "stack-trace": "0.0.10",
+    "stacktracey": "^2.0.14",
+    "strip-ansi": "^6.0.0",
     "tasktimer": "^3.0.0"
+  },
+  "devDependencies": {
+    "express": "^4.17.1"
   }
 }

@@ -1,126 +1,99 @@
-// hydra -l fergus -P 10-million-password-list-top-1000000.txt 10.10.10.191 http-post-form
-// "/admin/login:username=^USER^&password=^PASS^&save=:Login:Login Failed" -v
 const { program } = require('commander')
 const packagejson = require('../package.json')
 const url = require('url')
 const colorize = require('json-colorizer')
-
-// Hydra v9.1 (c) 2020 by van Hauser/THC & David Maciejak - Please do not use in military or secret service organizations, or for illegal purposes (this is non-binding, these *** ignore laws and ethics anyway).
-
-// Syntax: hydra [[[-l LOGIN|-L FILE] [-p PASS|-P FILE]] | [-C FILE]] [-e nsr] [-o FILE] [-t TASKS] [-M FILE [-T TASKS]] [-w TIME] [-W TIME] [-f] [-s PORT] [-x MIN:MAX:CHARSET] [-c TIME] [-ISOuvVd46] [-m MODULE_OPT] [service://server[:PORT][/OPT]]
-
-// Options:
-//   -l LOGIN or -L FILE  login with LOGIN name, or load several logins from FILE
-//   -p PASS  or -P FILE  try password PASS, or load several passwords from FILE
-//   -C FILE   colon separated "login:pass" format, instead of -L/-P options
-//   -M FILE   list of servers to attack, one entry per line, ':' to specify port
-//   -t TASKS  run TASKS number of connects in parallel per target (default: 16)
-//   -U        service module usage details
-//   -m OPT    options specific for a module, see -U output for information
-//   -h        more command line options (COMPLETE HELP)
-//   server    the target: DNS, IP or 192.168.0.0/24 (this OR the -M option)
-//   service   the service to crack (see below for supported protocols)
-//   OPT       some service modules support additional input (-U for module help)
-
-// Supported services: adam6500 asterisk cisco cisco-enable cvs firebird ftp[s] http[s]-{head|get|post} http[s]-{get|post}-form http-proxy http-proxy-urlenum icq imap[s] irc ldap2[s] ldap3[-{cram|digest}md5][s] memcached mongodb mssql mysql nntp oracle-listener oracle-sid pcanywhere pcnfs pop3[s] postgres radmin2 rdp redis rexec rlogin rpcap rsh rtsp s7-300 sip smb smtp[s] smtp-enum snmp socks5 ssh sshkey svn teamspeak telnet[s] vmauthd vnc xmpp
-
-// Example:  hydra -l user -P passlist.txt ftp://192.168.0.1
+const chalk = require('chalk')
 
 module.exports = class Commander extends require('../classes/package') {
 	constructor() {
 		super()
 	}
 
-	async apply() {
-		const userSettings = await this.query()
-		const defaultSettings = {
-			maxParallelLimit: 110,
-			batchSize: 1000,
-			htmlEncoding: 'utf8',
-			retry: {
-				times: 9,
-				interval: function (retryCount) {
-					return 50 * Math.pow(2, retryCount)
-				}
-			},
-			attackUrl: 'http://10.10.10.191/admin/login',
-			wordlist: '/usr/share/wordlists/seclists/Passwords/xato-net-10-million-passwords.txt',
-			prettyError: true,
-			payload: '',
-			removeQueueEvery: 10000,
-			attackType: 'http-post-urlencoded',
-			useGui: false
-		}
-
-		// Merge default and user settings
-		this.xhaust.settings = Object.assign({}, defaultSettings, userSettings)
-
-		// create hostname and path from attackurl
-		const parse = url.parse(this.xhaust.settings.attackUrl)
-		this.xhaust.settings.attackHostname = parse.hostname
-		this.xhaust.settings.attackPath = parse.path
-
-		// pretty error if wanted
-		if (this.xhaust.settings.prettyError) {
-			require('pretty-error').start()
-		}
-
-		// define our attack types
-		this.xhaust.settings.attackTypes = this.xhaust.settings.attackType.split('-')
-	}
-
-	prettyPrint() {
-		return console.log(colorize(JSON.stringify(this.xhaust.settings, null, 3)))
-	}
-
 	printFooter() {
-		console.log(`\n\n
+		console.log(`
   xHaust is a tool to guess/crack valid login/password pairs.
   Licensed under Massachusetts Institute of Technology (MIT) License. 
   The newest version is always available at: https://github.com/givemeallyourcats/xhaust
   Please don't use in military or secret service organizations, or for illegal purposes. 😆`)
 	}
 
-	async query() {
+	async inquiry() {
 		program.version(packagejson.version)
 		program.exitOverride()
+		const example =
+			'-a https://website.com -t -a http://somewebsite.com http-post-urlencoded -u admin -P passwords.txt -s 1000 -l 130 -i "csrf=token" -o "username=:username:&password=:password:&csrftoken=:csrf:"'
 
 		program.on('--help', () => {
 			console.log('')
 			console.log('Example call:')
-			console.log('  $ xhaust -u http://10.10.10.191/admin/login')
+			console.log(chalk.bold.white(`  $ xhaust ${example}`))
 		})
-		program.requiredOption('-a, --attackUrl <attackUrl>', 'url where the form resides')
-		program.requiredOption('-w, --wordlist <wordlist>', 'wordlist file to use')
-		program.requiredOption('-t, --typeAttack <typeAttack>', 'type of attack, example: "http-post-urlencoded"')
-		program.option('-p, --payload <payload>', 'payload of attack')
-		program.option('-l, --limitParallel <limitParallel>', 'max parallel requests at a time')
-		program.option('-s, --batchSize <batchSize>', 'the get and post requests batch size')
+
+		program.option('-a, --attackUri <attackUri>', 'Protocol URI to attack')
+		program.option('-u, --user <user>', 'Username to use in attack payload')
+		program.option('-U, --userfile <userfile>', 'File full of usernames to use in attack payload')
+		program.option('-p, --pass <pass>', 'Password to use in attack payload')
+		program.option('-P, --passfile <passfile>', 'File full of passwords to use in attack payload')
+		program.option('-l, --limitParallel <limitParallel>', 'Max parallel requests at a time')
+		program.option('-b, --batchSize <batchSize>', 'The get and post requests batch size')
+		program.option('-T, --test', 'Run attack on in built local http server for testing')
+		program.option(
+			'-t, --tags <tags>',
+			'tags to use for this attack seperated by hypens (Ex. http-post-urlencoded)'
+		)
+		program.option(
+			'-i, --input <input>',
+			'input string to use as first scan structure data (Ex. form input names configurations)'
+		)
+		program.option(
+			'-o, --output <output>',
+			'output string to use as payload for attack, will replace :username: :password: and :csrf: with respectable values'
+		)
 		program.option('-g, --useGui', 'enable gui')
-		program.option('-e, --prettyError', 'enables pretty exceptions, so relaxing')
 
 		try {
 			program.parse(process.argv)
 		} catch (err) {
 			if (err.code === 'commander.unknownOption' || err.code == 'commander.missingMandatoryOptionValue') {
 				console.log('\n')
-				this.pretty.warn(err.toString())
+				this.xHaust.Debug.error(err.toString().replace('CommanderError: error: ', ''))
 				program.outputHelp()
 				this.printFooter()
 				process.exit()
 			}
 		}
 
+		if (process.argv.length <= 2) {
+			this.xHaust.Debug.error('Need command parameters to execute xHaust...')
+			program.outputHelp()
+			this.printFooter()
+			process.exit()
+		}
+
 		const output = {}
 
+		if (program.attackUri) output.attackUri = program.attackUri
+		if (program.user) output.user = program.user
+		if (program.userFile) output.userFile = program.userFile
+		if (program.pass) output.pass = program.pass
+		if (program.passFile) output.passFile = program.passFile
+		if (program.test) output.test = program.test
+		if (program.tags) output.tags = program.tags
 		if (program.limitParallel) output.limitParallel = program.limitParallel
-		if (program.batchSize) output.batchSize = program.batchSize
-		if (program.attackUrl) output.attackUrl = program.attackUrl
-		if (program.typeAttack) output.typeAttack = program.typeAttack
-		if (program.payload) output.payload = program.payload
-		if (program.wordlist) output.wordlist = program.wordlist
 		if (program.useGui) output.useGui = program.useGui
-		if (program.prettyError) output.prettyError = false
+		if (program.batchSize) output.batchSize = program.batchSize
+		if (program.input) output.input = program.input
+		if (program.output) output.output = program.output
+
+		if (output.attackUri && !output.tags) {
+			this.xHaust.Debug.error(`--tags are needed for all attack types, except --test runs`)
+			process.exit()
+		}
+
+		if (!output.attackUri && !output.test) {
+			this.xHaust.Debug.error(`either --attackUri or --test needs to be set`)
+			process.exit()
+		}
 
 		return output
 	}

@@ -1,22 +1,30 @@
+const path = require('path')
 const pkg = require('./modules/pkg')
 const banner = require('./modules/banner')
+const packagejson = require('./package.json')
 
-class xHaust {
-	async start() {
+module.exports = class xHaust {
+	constructor() {
+		return new Promise(async (resolve, reject) => {
+			await pkg.load(this)
+			return resolve(this)
+		})
+	}
+
+	// entry.js or otherwise, comes through here to 'launcher' func
+	async launch(launchOptions) {
+		this.launchOptions = launchOptions
+
+		this.Debug.filter = ['nothing']
+
+		this.Debug.info(`Started ${packagejson.name} v${packagejson.version}`)
+		this.Debug.info({ launchOptions })
+		this.Debug.debug('Show banner')
 		await banner.show()
-		await pkg.load(this) // Load all packages, and pass reference to 'this'
 
-		if (process.platform !== 'linux') {
-			return this.debug.fatal(`Your process.platform '${process.platform}' is not linux, not supported.`)
+		if (launchOptions.commander) {
+			this.Debug.debug('Commander inquiry launching')
+			await this.Commander.inquiry()
 		}
-
-		await this.pkgs.commander.apply() // Run Commander to get all program settings
-		await this.pkgs.commander.prettyPrint()
-		await this.pkgs.wordlist.load()
-
-		await this.pkgs.attack.start()
-		console.log('DONE!')
 	}
 }
-
-new xHaust().start()

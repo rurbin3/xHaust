@@ -1,6 +1,5 @@
 # xHaust
-datastorage/
-*.bak
+logs/
 
 # Logs
 logs
